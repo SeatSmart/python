@@ -1,4 +1,5 @@
 import math
+from reportlab.pdfgen import canvas
 
 dict1 = {'CSE': 2, 'ME': 1, 'ECE': 2, 'EEE': 0, 'CE': 0}
 dict2 = {'CSE1': 120, 'CSE2': 93, 'ME1': 90, 'ECE1': 54, 'ECE2': 50}
@@ -185,8 +186,7 @@ print(dict6)
 
 allot = {}
 
-
-#allotin students
+'''#allotin students
 keys = list(dict_cl.keys())
 clslst = list(dict_cl.values())
 
@@ -247,8 +247,145 @@ for m in range(len(clslst)):
                             allot[k1] = 2
                     print(j, "-", k1, allot[k1])
     except IndexError:
-        print("Students are fully allotted")
+        print("Students are fully allotted")'''
+
+output_file = "output.txt"
+
+# Allotting students
+keys = list(dict_cl.keys())
+clslst = list(dict_cl.values())
+
+with open(output_file, "w") as f:
+    for m in range(len(clslst)):
+        values = list(clslst[m].keys())
+        room = keys[m]
+
+        f.write(f"Room: {room}\n")
+        
+        try:
+            if len(values) == 2:
+                k1 = values[0]
+                k2 = values[1]
+                for j in range(1, 43):
+                    if j % 2 != 0:
+                        if k1 in allot:
+                            if allot[k1] + 1 <= dict2[k1] and allot[k1] + 1 not in dict3[k1]:
+                                allot[k1] += 1
+                            elif allot[k1] + 1 <= dict2[k1] and allot[k1] + 1 in dict3[k1]:
+                                allot[k1] += 2
+                            elif allot[k1] + 1 > dict2[k1]:
+                                continue
+                        else:
+                            if 1 not in dict3[k1]:
+                                allot[k1] = 1
+                            else:
+                                allot[k1] = 2
+                        f.write(f"{j} - {k1}: {allot[k1]}\t")
+                    else:
+                        if k2 in allot:
+                            if allot[k2] + 1 <= dict2[k2] and allot[k2] + 1 not in dict3[k2]:
+                                allot[k2] += 1
+                            elif allot[k2] + 1 <= dict2[k2] and allot[k2] + 1 in dict3[k2]:
+                                allot[k2] += 2
+                            elif allot[k2] + 1 > dict2[k2]:
+                                continue
+                        else:
+                            if 1 not in dict3[k2]:
+                                allot[k2] = 1
+                            else:
+                                allot[k2] = 2
+                        f.write(f"{j} - {k2}: {allot[k2]}\n")
+            else:
+                k1 = values[0]
+                for j in range(1, 43):
+                    if j % 2 != 0:
+                        if k1 in allot:
+                            if allot[k1] + 1 <= dict2[k1] and allot[k1] + 1 not in dict3[k1]:
+                                allot[k1] += 1
+                            elif allot[k1] + 1 <= dict2[k1] and allot[k1] + 1 in dict3[k1]:
+                                allot[k1] += 2
+                            elif allot[k1] + 1 > dict2[k1]:
+                                continue
+                        else:
+                            if 1 not in dict3[k1]:
+                                allot[k1] = 1
+                            else:
+                                allot[k1] = 2
+                        f.write(f"{j} - {k1}: {allot[k1]}\n")      
+        except IndexError:
+            print("Students are fully allotted")
 
 
+print("Output written to file:", output_file)
 
 
+'''text_file = "output.txt"
+pdf_file = "output.pdf"
+
+# Read the content from the text file
+with open(text_file, "r") as file:
+    content = file.read()
+
+# Create a new PDF file
+c = canvas.Canvas(pdf_file)
+
+# Set the font and font size
+c.setFont("Helvetica", 12)
+
+# Set the initial y-coordinate for drawing
+y = 800
+line_height = 15  # Adjust the line height as needed
+
+# Write the content to the PDF
+for line in content.split("\n"):
+    c.drawString(50, y, line)
+    y -= line_height
+
+# Save and close the PDF file
+c.save()
+
+print("PDF file created:", pdf_file)'''
+
+from reportlab.lib.pagesizes import letter
+from reportlab.lib.units import inch
+from reportlab.pdfgen import canvas
+
+text_file = "output.txt"
+pdf_file = "output.pdf"
+
+# Read the content from the text file
+with open(text_file, "r") as file:
+    content = file.readlines()
+
+# Create a new PDF file
+c = canvas.Canvas(pdf_file, pagesize=letter)
+
+# Set the font and font size
+c.setFont("Helvetica", 12)
+
+# Set the initial y-coordinate for drawing
+y = 10 * inch  # Start from the top of the page
+line_height = 15  # Adjust the line height as needed
+
+# Iterate through the content lines
+for line in content:
+    line = line.strip()
+
+    # Check if the remaining space is enough for the next line
+    if y < 0.75 * inch:  # Adjust the threshold as needed
+        c.showPage()  # Add a new page
+        y = 10 * inch  # Reset the y-coordinate for the new page
+
+    # Replace tab characters with spaces
+    line = line.replace('\t', ' ' * 8)  # Assuming 8 spaces per tab
+
+    # Write the line to the PDF
+    c.drawString(1 * inch, y, line)
+
+    # Update the y-coordinate for the next line
+    y -= line_height
+
+# Save and close the PDF file
+c.save()
+
+print("PDF file created:", pdf_file)
