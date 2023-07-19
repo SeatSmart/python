@@ -192,8 +192,7 @@ while True:
 #seating arrangement
 
 dict5_sorted = dict(sorted(dict5.items(), key = lambda x:x[1], reverse = True))
-print("dict5_sorted : ", dict5_sorted)
-print()
+
 
 #capacity of halls
 cb_cap = 170
@@ -225,7 +224,7 @@ if ('CB' in h_lst):
         else:
             cb -= dict5_sorted[i]
 
-print("cblock alloted : ", lst_cblock)
+
 dict6 = dict5_sorted
 for i in range(len(lst_cblock)):
     if (lst_cblock[i] in dict6):
@@ -247,7 +246,7 @@ for i in range(len(lst_chall)):
     if (lst_chall[i] in dict6):
         del dict6[lst_chall[i]]
 
-print("civil hall alloted : ", lst_chall)
+
 
 if ('MH' in h_lst):
     for i in dict6:
@@ -263,10 +262,7 @@ for i in range(len(lst_mhall)):
     if (lst_mhall[i] in dict6):
         del dict6[lst_mhall[i]]
 
-print("mech hall alloted : ", lst_mhall)
-print()
-print("dict6 : ", dict6)
-print()
+
 
 print("capacity of cblcok : ", cb_cap)
 print("capacity of civil hall : ", ch_cap)
@@ -307,21 +303,17 @@ print("civil hall alloted students : ", dict_ch)
 print()
 print("mech hall alloted students : ", dict_mh)
 print()
-print("dict 6 after alloting : ", dict6)
+print("Remaining students : ", dict6)
 print()
-print(cb_cap)
-print(ch_cap)
-print(mh_cap)
+
 
 
 #alloting classes to classrooms
 
 dict_cl = {}    #class_id mapped to class
 
-print(rm_lst)
-print(dict6)
+
 dict6_key = list(dict6.keys())
-print(dict6_key)
 
 for i in rm_lst:
     dict_class = {}
@@ -348,10 +340,10 @@ for i in rm_lst:
             del dict_class[templst[1]]
         
     
-        
+print()        
 print(dict_cl)
-print(dict6)
-
+print("Students yet to be allotted : ", dict6)
+print()
 
 allot = {}
 
