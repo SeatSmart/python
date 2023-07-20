@@ -197,7 +197,7 @@ dict5_sorted = dict(sorted(dict5.items(), key = lambda x:x[1], reverse = True))
 #capacity of halls
 cb_cap = 170
 ch_cap = 62
-mh_cap = 120
+mh_cap = 110
 
 cb = 0
 ch = 0
@@ -306,6 +306,29 @@ print()
 print("Remaining students : ", dict6)
 print()
 
+output_file_h = "output_h.txt"
+cbindex=1
+chindex=1
+mhindex=1
+with open(output_file_h, "w") as f:
+    f.write(f"\n\nHall: C Block\n")
+    for i in dict_cb:
+        f.write(f"{i}\n")
+        for j in range(1, dict_cb[i]+1):
+            f.write(f"\n {cbindex} - {i}  {j}\n")
+            cbindex+=1
+    f.write(f"\n\nHall: Civil Hall\n")
+    for i in dict_ch:
+        f.write(f"{i}\n")
+        for j in range(1, dict_ch[i]+1):
+            f.write(f"\n {chindex} - {i}  {j}\n")
+            chindex+=1
+    f.write(f"\n\nHall: Mech Hall\n")
+    for i in dict_mh:
+        f.write(f"{i}\n")
+        for j in range(1, dict_mh[i]+1):
+            f.write(f"\n {mhindex} - {i}  {j}\n")
+            mhindex+=1
 
 
 #alloting classes to classrooms
@@ -420,40 +443,71 @@ print("Output written to file:", output_file)
 text_file = "output.txt"
 pdf_file = "output.pdf"
 
+text_file_h = "output_h.txt"
+pdf_file_h = "output_h.pdf"
+
 # Read the content from the text file
 with open(text_file, "r") as file:
-    content = file.readlines()
+    content1 = file.readlines()
+
+with open(text_file_h, "r") as file:
+    content2 = file.readlines()
 
 # Create a new PDF file
-c = canvas.Canvas(pdf_file, pagesize=letter)
+c1 = canvas.Canvas(pdf_file, pagesize=letter)
+c2 = canvas.Canvas(pdf_file_h, pagesize=letter)
 
 # Set the font and font size
-c.setFont("Helvetica", 12)
+c1.setFont("Helvetica", 12)
+c2.setFont("Helvetica", 12)
 
 # Set the initial y-coordinate for drawing
 y = 10 * inch  # Start from the top of the page
 line_height = 15  # Adjust the line height as needed
 
 # Iterate through the content lines
-for line in content:
+for line in content1:
     line = line.strip()
 
     # Check if the remaining space is enough for the next line
     if y < 0.75 * inch:  # Adjust the threshold as needed
-        c.showPage()  # Add a new page
+        c1.showPage()  # Add a new page
         y = 10 * inch  # Reset the y-coordinate for the new page
 
     # Replace tab characters with spaces
     line = line.replace('\t', ' ' * 8)  # Assuming 8 spaces per tab
 
     # Write the line to the PDF
-    c.drawString(1 * inch, y, line)
+    c1.drawString(1 * inch, y, line)
 
     # Update the y-coordinate for the next line
     y -= line_height
 
 # Save and close the PDF file
-c.save()
+c1.save()
 
 print("PDF file created:", pdf_file)
+
+# Iterate through the content lines
+for line in content2:
+    line = line.strip()
+
+    # Check if the remaining space is enough for the next line
+    if y < 0.75 * inch:  # Adjust the threshold as needed
+        c2.showPage()  # Add a new page
+        y = 10 * inch  # Reset the y-coordinate for the new page
+
+    # Replace tab characters with spaces
+    line = line.replace('\t', ' ' * 8)  # Assuming 8 spaces per tab
+
+    # Write the line to the PDF
+    c2.drawString(1 * inch, y, line)
+
+    # Update the y-coordinate for the next line
+    y -= line_height
+
+# Save and close the PDF file
+c2.save()
+
+print("PDF file created:", pdf_file_h)
 
