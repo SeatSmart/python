@@ -26,7 +26,7 @@ while True:
         print("1 : Internal")
         print("2 : External")
         print("3 : Go back")
-        ch == int(input("Choose your option : "))
+        ch = int(input("Choose your option : "))
         if (ch == 1):
             while True:     #Choosing branches and number of classes for each
                 print("1 : CSE")
@@ -264,7 +264,7 @@ for i in range(len(lst_mhall)):
 
 
 
-print("capacity of cblcok : ", cb_cap)
+print("capacity of cblock : ", cb_cap)
 print("capacity of civil hall : ", ch_cap)
 print("capacity of mech hall : ", mh_cap)
 print()
@@ -311,23 +311,26 @@ cbindex=1
 chindex=1
 mhindex=1
 with open(output_file_h, "w") as f:
-    f.write(f"\n\nHall: C Block\n")
+    f.write(f"\n\nHall: C Block\n\n")
     for i in dict_cb:
-        f.write(f"{i}\n")
+        f.write(f"\n{i}\n")
+        f.write(f"\nseat - class   roll\n")
         for j in range(1, dict_cb[i]+1):
-            f.write(f"\n {cbindex} - {i}  {j}\n")
+            f.write(f"\n {cbindex}   -   {i}  {j}\n")
             cbindex+=1
     f.write(f"\n\nHall: Civil Hall\n")
     for i in dict_ch:
         f.write(f"{i}\n")
+        f.write(f"seat - class   roll\n")
         for j in range(1, dict_ch[i]+1):
-            f.write(f"\n {chindex} - {i}  {j}\n")
+            f.write(f"\n {chindex}   -   {i}  {j}\n")
             chindex+=1
     f.write(f"\n\nHall: Mech Hall\n")
     for i in dict_mh:
         f.write(f"{i}\n")
+        f.write(f"seat - class   roll\n")
         for j in range(1, dict_mh[i]+1):
-            f.write(f"\n {mhindex} - {i}  {j}\n")
+            f.write(f"\n {mhindex}   -   {i}  {j}\n")
             mhindex+=1
 
 
@@ -435,6 +438,7 @@ with open(output_file, "w") as f:
                         f.write(f"\n{j} - {k1}: {allot[k1]}\n")      
         except IndexError:
             print("Students are fully allotted")
+            break
 
 
 print("Output written to file:", output_file)
