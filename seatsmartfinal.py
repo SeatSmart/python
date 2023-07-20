@@ -132,11 +132,11 @@ while True:
                         dict2[lst0_k[i]+str(j)] = roll
                         vac_n = int(input("Enter the number of vacant students : "))
                         for k in range(vac_n):
-                            vn = int(input("Enter vacant roll (if none, enter zero): "))
+                            vn = int(input("Enter vacant roll : "))
                             while True:
                                 if (vn > roll):
                                     print("Invalid roll number")
-                                    vn = int(input("Enter vacant roll (if none, enter zero): "))
+                                    vn = int(input("Enter vacant roll : "))
                                 else:
                                     break
                             vac_lst.append(vn)
